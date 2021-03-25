@@ -26,6 +26,7 @@
 	--size-700: 2.36rem;
 	--size-800: 3.15rem;
 	--size-900: 4.2rem;
+	--text: #ebf5f0;
 	--System: system, Iowan Old Style, Apple Garamond, Baskerville,
 		Times New Roman, Droid Serif, Times, Source Serif Pro, serif,
 		Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
@@ -36,16 +37,22 @@
 	--Font: 'Brygada', var(--System);
 }
 
-html,
-body {
-	height: 100%;
-	height: -webkit-fill-available;
-	line-height: 1.5;
+:root:not(.loaded) {
+	opacity: 0;
 }
 
 html {
+	transition: opacity 0.25s linear 0.5s;
 	font-size: 16px;
-	color: #ebf5f0;
+}
+
+html,
+body {
+	height: 100%;
+	background-color: var(--text);
+	color: var(--text);
+	height: -webkit-fill-available;
+	line-height: 1.5;
 }
 
 body {
@@ -53,8 +60,13 @@ body {
 	flex-direction: column;
 	font-weight: 400;
 	font-family: var(--Font);
-	/* background-color: #003fd6; */
 	background-image: linear-gradient(122deg, #7736f8, #0c008f);
+	color: transparent;
+	/* background-color: #003fd6; */
+}
+
+html body {
+	color: var(--text);
 }
 
 main {
@@ -63,6 +75,16 @@ main {
 	height: 100%;
 	width: clamp(414px, 95vw, 992px);
 	margin: 0 auto;
+}
+
+nav > a {
+	color: var(--text);
+	text-decoration-color: transparent;
+	transition: text-decoration-color 0.25s ease-out;
+}
+
+nav > a:hover {
+	text-decoration-color: currentColor;
 }
 
 h1,
@@ -105,25 +127,36 @@ h3 {
 	margin-inline-start: 0.75ch;
 }
 
-/*
-
-nav ul {
-	display: inline-flex;
-	padding-left: 0;
-	list-style: none;
-	gap: 15px;
+a[skiplink] {
+	position: fixed !important;
+	/* keep it on viewport */
+	top: 0px !important;
+	left: 0px !important;
+	/* give it non-zero size, VoiceOver on Safari requires at least 2 pixels
+	   before allowing buttons to be activated. */
+	width: 4px !important;
+	height: 4px !important;
+	/* visually hide it with overflow and opacity */
+	opacity: 0 !important;
+	overflow: hidden !important;
+	/* remove any margin or padding */
+	border: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	/* ensure no other style sets display to none */
+	display: block !important;
+	visibility: visible !important;
+	pointer-events: none !important;
 }
 
-nav li {
-	font-size: var(--size-600);
+a[skiplink]:focus {
+	position: absolute !important;
+	top: 0px !important;
+	left: 0px !important;
+	height: auto !important;
+	width: auto !important;
+	margin: auto !important;
+	opacity: 1 !important;
+	pointer-events: auto !important;
+	background-color: white;
 }
-
-nav li::after {
-	content: '|';
-	margin-left: 15px;
-}
-
-nav li:last-child::after {
-	content: unset;
-}
-*/
