@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="opacity: 0">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,11 +14,12 @@
 		/>
 	</head>
 	<body>
+		<a href="#main" skiplink>Skip to main</a>
 		<!-- prettier-ignore -->
 		<script>(_=>"fonts"in document?Promise.all([document.fonts.load("1em Brygada")]).then(_=>document.documentElement.classList.add('fonts')):document.documentElement.classList.add('fonts'))()</script>
 		<!-- inpiration: https://bestfolios.medium.com/5-minimalist-design-portfolios-for-inspiration-57dc6bb439c1 -->
-		<main>
-			<section id="" class="flow">
+		<main id="main">
+			<section id="wrapper" class="flow">
 				<h1>frankie has worked on these projects.</h1>
 				<small>the lowercase `f` is intentional</small>
 				<p class="h2">
@@ -29,14 +30,15 @@
 					<a href="/">back</a>
 				</nav>
 			</section>
-			<section id=""></section>
-			<section id=""></section>
 			<!--
+			<section id=""></section>
+			<section id=""></section>
 			<h1>My name is Developer...</h1>
 			<h2>and I'm a Frankie 🤗</h2>
 			<hr />
 			<h3>...wait...</h3>
 			-->
 		</main>
+		<script async defer src="/static/index.js"></script>
 	</body>
 </html>
