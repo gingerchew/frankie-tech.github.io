@@ -26,42 +26,48 @@
 	--size-700: 2.36rem;
 	--size-800: 3.15rem;
 	--size-900: 4.2rem;
-	--System: Iowan Old Style, Apple Garamond, Baskerville, Times New Roman,
-		Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji,
-		Segoe UI Emoji, Segoe UI Symbol;
+	--System: system, Iowan Old Style, Apple Garamond, Baskerville,
+		Times New Roman, Droid Serif, Times, Source Serif Pro, serif,
+		Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+	--Font: var(--System);
+}
+
+:root.fonts {
+	--Font: 'Brygada', var(--System);
 }
 
 html,
 body {
 	height: 100%;
+	height: -webkit-fill-available;
 	line-height: 1.5;
 }
 
 html {
 	font-size: 16px;
-	color: #121314;
+	color: #ebf5f0;
 }
 
 body {
 	display: flex;
 	flex-direction: column;
-	padding: 5vmax;
 	font-weight: 400;
-	font-family: var(--System);
+	font-family: var(--Font);
+	/* background-color: #003fd6; */
+	background-image: linear-gradient(122deg, #7736f8, #0c008f);
 }
 
-body.fonts {
-	font-family: 'Brygada', var(--System);
-}
-
-header,
 main {
-	width: clamp(414px, 55vw, 992px);
+	display: grid;
+	place-content: center;
+	height: 100%;
+	width: clamp(414px, 95vw, 992px);
 	margin: 0 auto;
 }
 
 h1,
 h2,
+.h2,
 h3 {
 	width: 100%;
 	line-height: 1.3;
@@ -75,6 +81,7 @@ h1 {
 	font-weight: 700;
 }
 
+.h2,
 h2 {
 	font-size: var(--size-800);
 	letter-spacing: -0.075em;
@@ -84,6 +91,21 @@ h2 {
 h3 {
 	font-size: var(--size-700);
 }
+
+.flow > * {
+	margin: 0;
+}
+
+.flow > * + * {
+	margin-top: 0.5em;
+}
+
+.flow > small {
+	display: inline-block;
+	margin-inline-start: 0.75ch;
+}
+
+/*
 
 nav ul {
 	display: inline-flex;
@@ -104,3 +126,4 @@ nav li::after {
 nav li:last-child::after {
 	content: unset;
 }
+*/
