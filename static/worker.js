@@ -17,6 +17,7 @@ addEventListener('message', ({ data }) => {
 		values = data;
 		return;
 	}
+
 	const d = values.map(([cx, cy, rv], i) => [
 		addChaos(cx, cy, rv, uid(Math.ceil(cx.length / 2)), uid(Math.ceil(cy.length / 2)), i),
 		addChaos(cx, cy, rv, uid(Math.ceil(cx.length / 2)), +uid(Math.ceil(cy.length / 2)), i)

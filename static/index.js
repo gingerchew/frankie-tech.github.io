@@ -57,7 +57,7 @@ function go(url) {
 		if (c !== id) return;
 		document.title = doc.title;
 		wrapper.innerHTML = doc.getElementById('wrapper').innerHTML;
-		worker.postMessage(data);
+		worker.postMessage();
 		requestAnimationFrame(() => {
 			setAngle();
 		});
