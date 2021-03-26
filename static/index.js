@@ -1,8 +1,25 @@
-/** prettier-ignore */
-const generate = (e => document.querySelectorAll("#Logo>circle").forEach(((e, t) => { requestAnimationFrame((r => e.style.setProperty("transform", `translate${t % 2 == 0 && 1 & new Date ? "X" : "Y"}(${((r, a) => { let o = +e[r][0][a], n = +e[r][1][a], l = +e[r][2][a]; return ((t % 2 == 0 ? Math.ceil(0 | o / l * n) : 0 | Math.ceil(n / l) * o) * (1 & new Date ? 1 : -1) * .025).toFixed(2) / 2 })("attributes", "value")}px)`))) })))
-document.addEventListener("DOMContentLoaded", (generate(), Logo.classList.remove("hidden")), { once: true });
-const setAngle = () => requestAnimationFrame(() => document.body.style.setProperty('--gradient-angle', Math.floor(Math.random() * 361) + 'deg'));
+/*
+const rand = (len) => +crypto.getRandomValues(new Uint8Array(len)).join('').slice(0, 2);
+/** prettier-ignore 
+const addChaos = (o, l, n, j, m, t) => Math.min(Math.max((t % 2 == 0 ? (Math.ceil(0 | +o / +l * +n) * j) : (0 | (Math.ceil(+n / +l) * +o) * m) * (1 & new Date ? 1 : -1) * .1).toFixed(2), -125), 125);
+/** prettier-ignore 
+const generate = e => document.querySelectorAll("#Logo>circle").forEach((e, t) => e.style.transform = `translate(${((r, a) => [addChaos(e[r][0][a], e[r][1][a], e[r][2][a], rand(Math.floor(e[r][0][a].length / 2)), rand(Math.floor(e[r][1][a].length / 2)), t), addChaos(e[r][0][a], e[r][1][a], e[r][2][a], rand(Math.floor(e[r][0][a].length / 2)), rand(Math.floor(e[r][1][a].length / 2)), t)].join('px,'))("attributes", "value")}px)`);
+*/
+let a = 'attributes',
+	v = 'value';
+
+const data = [...document.querySelectorAll('#Logo>circle')].map(el => [el[a][0][v], el[a][1][v], el[a][2][v]]);
+
+data.unshift('store');
+
+const worker = new Worker('./static/worker.js');
+// worker.postMessage([...data]);
+document.addEventListener("DOMContentLoaded", _ => Logo.classList.remove("hidden"), { once: true });
+
+const setAngle = () => document.body.style.setProperty('--gradient-angle', Math.floor(Math.random() * 361) + 'deg');
+
 const wrapper = document.getElementById('wrapper');
+
 addEventListener('pageshow', function () {
 	setAngle();
 	requestAnimationFrame(() => {
@@ -10,6 +27,12 @@ addEventListener('pageshow', function () {
 		document.documentElement.classList.add('loaded');
 	});
 }, { once: true });
+
+let transformValues;
+
+worker.postMessage(data);
+
+data.shift();
 
 addEventListener('click', e => {
 	var a = e.target;
@@ -20,7 +43,11 @@ addEventListener('click', e => {
 		history.pushState(0, 0, a.href);
 	}
 });
+
+worker.onmessage = ({ data }) => { requestAnimationFrame(() => Logo.querySelectorAll('circle').forEach((el, i) => { el.style.setProperty('--x', data[i][0]); el.style.setProperty('--y', data[i][1]) })); }
+
 var c = 0;
+
 function go(url) {
 	document.body.classList.add('transitioning');
 	// you can plug your own implementation in here!
@@ -30,17 +57,22 @@ function go(url) {
 		if (c !== id) return;
 		document.title = doc.title;
 		wrapper.innerHTML = doc.getElementById('wrapper').innerHTML;
-		setAngle();
-		generate();
+		worker.postMessage(data);
+		requestAnimationFrame(() => {
+			setAngle();
+		});
 	}).then(() => {
 		document.body.classList.remove('transitioning')
 	});
 }
+
 var ps = history.pushState;
+
 history.pushState = (a, b, url) => {
 	ps.call(history, a, b, url);
 	go(url);
 };
+
 addEventListener('popstate', () => {
 	go(location.href);
 });
