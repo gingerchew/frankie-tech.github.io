@@ -7,8 +7,8 @@ const generate = e => document.querySelectorAll("#Logo>circle").forEach((e, t) =
 */
 let a = 'attributes',
 	v = 'value';
-
-const data = [...document.querySelectorAll('#Logo>circle')].map(el => [el[a][0][v], el[a][1][v], el[a][2][v]]);
+const circles = [...Logo.querySelectorAll('circle')];
+const data = circles.map(el => [el[a][0][v], el[a][1][v], el[a][2][v]]);
 
 data.unshift('store');
 
@@ -26,8 +26,6 @@ addEventListener('pageshow', function () {
 	});
 }, { once: true });
 
-let transformValues;
-
 worker.postMessage(data);
 
 data.shift();
@@ -42,7 +40,9 @@ addEventListener('click', e => {
 	}
 });
 
-worker.onmessage = ({ data }) => { requestAnimationFrame(() => Logo.querySelectorAll('circle').forEach((el, i) => { el.style.setProperty('--x', data[i][0]); el.style.setProperty('--y', data[i][1]) })); }
+const reset = () => requestAnimationFrame(() => circles.forEach(el => { el.style.setProperty('--x', '0'); el.style.setProperty('--y', '0') }));
+
+worker.onmessage = ({ data }) => { requestAnimationFrame(() => circles.forEach((el, i) => { el.style.setProperty('--x', data[i][0]); el.style.setProperty('--y', data[i][1]) })); }
 
 var c = 0;
 
@@ -55,7 +55,7 @@ function go(url) {
 		if (c !== id) return;
 		document.title = doc.title;
 		wrapper.innerHTML = doc.getElementById('wrapper').innerHTML;
-		worker.postMessage();
+		worker.postMessage(true);
 	}).then(() => {
 		document.body.classList.remove('transitioning')
 	});
