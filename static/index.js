@@ -5,6 +5,9 @@ const addChaos = (o, l, n, j, m, t) => Math.min(Math.max((t % 2 == 0 ? (Math.cei
 /** prettier-ignore 
 const generate = e => document.querySelectorAll("#Logo>circle").forEach((e, t) => e.style.transform = `translate(${((r, a) => [addChaos(e[r][0][a], e[r][1][a], e[r][2][a], rand(Math.floor(e[r][0][a].length / 2)), rand(Math.floor(e[r][1][a].length / 2)), t), addChaos(e[r][0][a], e[r][1][a], e[r][2][a], rand(Math.floor(e[r][0][a].length / 2)), rand(Math.floor(e[r][1][a].length / 2)), t)].join('px,'))("attributes", "value")}px)`);
 */
+// TODO: Test for performance on other browsers
+// TODO: Accessibility
+// TODO: Progressive enhancement
 let a = 'attributes',
 	v = 'value';
 const circles = [...Logo.querySelectorAll('circle')];
@@ -55,6 +58,8 @@ function go(url) {
 		if (c !== id) return;
 		document.title = doc.title;
 		wrapper.innerHTML = doc.getElementById('wrapper').innerHTML;
+
+		// TODO when going home, reset, otherwise, make logo more chaotic
 		worker.postMessage(true);
 	}).then(() => {
 		document.body.classList.remove('transitioning')
