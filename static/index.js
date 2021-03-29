@@ -16,12 +16,10 @@ const worker = new Worker('./static/worker.js');
 // worker.postMessage([...data]);
 document.addEventListener("DOMContentLoaded", _ => Logo.classList.remove("hidden"), { once: true });
 
-const setAngle = () => document.body.style.setProperty('--gradient-angle', Math.floor(Math.random() * 361) + 'deg');
-
 const wrapper = document.getElementById('wrapper');
 
 addEventListener('pageshow', function () {
-	setAngle();
+	requestAnimationFrame(() => document.body.style.setProperty('--gradient-angle', Math.floor(Math.random() * 361) + 'deg'));
 	requestAnimationFrame(() => {
 		document.documentElement.style.opacity = '';
 		document.documentElement.classList.add('loaded');
@@ -58,9 +56,6 @@ function go(url) {
 		document.title = doc.title;
 		wrapper.innerHTML = doc.getElementById('wrapper').innerHTML;
 		worker.postMessage();
-		requestAnimationFrame(() => {
-			setAngle();
-		});
 	}).then(() => {
 		document.body.classList.remove('transitioning')
 	});
