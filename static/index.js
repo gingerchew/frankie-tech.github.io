@@ -1,33 +1,24 @@
-/*
-const rand = (len) => +crypto.getRandomValues(new Uint8Array(len)).join('').slice(0, 2);
-/** prettier-ignore 
-const addChaos = (o, l, n, j, m, t) => Math.min(Math.max((t % 2 == 0 ? (Math.ceil(0 | +o / +l * +n) * j) : (0 | (Math.ceil(+n / +l) * +o) * m) * (1 & new Date ? 1 : -1) * .1).toFixed(2), -125), 125);
-/** prettier-ignore 
-const generate = e => document.querySelectorAll("#Logo>circle").forEach((e, t) => e.style.transform = `translate(${((r, a) => [addChaos(e[r][0][a], e[r][1][a], e[r][2][a], rand(Math.floor(e[r][0][a].length / 2)), rand(Math.floor(e[r][1][a].length / 2)), t), addChaos(e[r][0][a], e[r][1][a], e[r][2][a], rand(Math.floor(e[r][0][a].length / 2)), rand(Math.floor(e[r][1][a].length / 2)), t)].join('px,'))("attributes", "value")}px)`);
-*/
 // TODO: Test for performance on other browsers
 // TODO: Accessibility
 // TODO: Progressive enhancement
-let a = 'attributes',
-	v = 'value';
+// @GLOBAL Root: document.documentElement html element
+// @GLOBAL wrapper: #wrapper section element
+// @GLOBAL Logo: #Logo svg element
 const circles = [...Logo.querySelectorAll('circle')];
-const data = circles.map(el => [el[a][0][v], el[a][1][v], el[a][2][v]]);
+/* [][cx, cy, r] */
+const data = ((a = 'attributes', v = 'value') => circles.map(el => [el[a][0][v], el[a][1][v], el[a][2][v]]))();
 
 data.unshift('store');
 
 const worker = new Worker('./static/worker.js');
-// worker.postMessage([...data]);
-document.addEventListener("DOMContentLoaded", _ => Logo.classList.remove("hidden"), { once: true });
 
-const wrapper = document.getElementById('wrapper');
-
-addEventListener('pageshow', function () {
-	requestAnimationFrame(() => document.body.style.setProperty('--gradient-angle', Math.floor(Math.random() * 361) + 'deg'));
-	requestAnimationFrame(() => {
-		document.documentElement.style.opacity = '';
-		document.documentElement.classList.add('loaded');
-	});
-}, { once: true });
+addEventListener('pageshow',
+	() => requestAnimationFrame(() => {
+		Root.classList.add('loaded');
+		Logo.classList.remove("hidden")
+	})
+	, { once: true }
+);
 
 worker.postMessage(data);
 
@@ -43,27 +34,48 @@ addEventListener('click', e => {
 	}
 });
 
-const reset = () => requestAnimationFrame(() => circles.forEach(el => { el.style.setProperty('--x', '0'); el.style.setProperty('--y', '0') }));
+const setCoords = async (coords = {}) => {
+	const hasData = 'data' in coords;
+	return new Promise(res => {
+		requestAnimationFrame(() =>
+			circles.forEach((el, i) => {
+				let [x, y] = hasData ? coords.data[i] : ['0', '0'];
+				el.style.setProperty('--x', x);
+				el.style.setProperty('--y', y);
+			})
+		);
+		res();
+	});
+};
 
-worker.onmessage = ({ data }) => { requestAnimationFrame(() => circles.forEach((el, i) => { el.style.setProperty('--x', data[i][0]); el.style.setProperty('--y', data[i][1]) })); }
+circles[0].addEventListener('transitionend', () => Root.classList.remove('transitioning'));
+
+worker.onmessage = (eventDetails) => setCoords(eventDetails);
 
 var c = 0;
-
+let lastUrl = '';
 function go(url) {
-	document.body.classList.add('transitioning');
+	if (url === lastUrl) {
+		worker.postMessage(true);
+		return;
+	}
+
+	if (url !== lastUrl) {
+		Root.classList.add('transitioning');
+		lastUrl = url;
+	}
+
 	// you can plug your own implementation in here!
 	var id = ++c;
+	// TODO when going home, reset, otherwise, make logo more chaotic
 	fetch(url).then(r => r.text()).then(html => {
 		var doc = new DOMParser().parseFromString(html, 'text/html');
 		if (c !== id) return;
 		document.title = doc.title;
 		wrapper.innerHTML = doc.getElementById('wrapper').innerHTML;
-
-		// TODO when going home, reset, otherwise, make logo more chaotic
-		worker.postMessage(true);
-	}).then(() => {
-		document.body.classList.remove('transitioning')
-	});
+	})
+		.then(() => worker.postMessage(true))
+		.then(() => Root.classList.remove('transitioning'));
 }
 
 var ps = history.pushState;
@@ -73,6 +85,4 @@ history.pushState = (a, b, url) => {
 	go(url);
 };
 
-addEventListener('popstate', () => {
-	go(location.href);
-});
+addEventListener('popstate', () => go(location.href));
