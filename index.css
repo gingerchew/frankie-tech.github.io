@@ -1,14 +1,3 @@
-/* Define the "system" font family */
-@font-face {
-	font-family: system;
-	font-style: normal;
-	font-weight: 100 900;
-	font-display: swap;
-	src: local('.SFNSText-Light'), local('.HelveticaNeueDeskInterface-Light'),
-		local('.LucidaGrandeUI'), local('Ubuntu Light'), local('Segoe UI Light'),
-		local('Roboto-Light'), local('DroidSans'), local('Tahoma');
-}
-
 @font-face {
 	font-family: 'Brygada';
 	font-weight: 400 700;
@@ -29,10 +18,12 @@
 	--size-800: 3.15rem;
 	--size-900: 4.2rem;
 	--text: #ebf5f0;
-	--System: system, Iowan Old Style, Apple Garamond, Baskerville,
-		Times New Roman, Droid Serif, Times, Source Serif Pro, serif,
-		Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
-	--Font: 'Brygada', var(--System);
+	--Serif: Iowan Old Style, Apple Garamond, Baskerville, Times New Roman,
+		Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji,
+		Segoe UI Emoji, Segoe UI Symbol;
+	--System: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui,
+		helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
+	--Font: 'Brygada', var(--Serif);
 	--gradient-start: #7736f8;
 	--gradient-end: #0c008f;
 }
@@ -50,10 +41,6 @@
 		transform: translate(calc(var(--x, 0) * 1px), calc(var(--y, 0) * 1px));
 		transition: transform 1s ease-out;
 	}
-	#Logo:hover > circle {
-		--x: 0 !important;
-		--y: 0 !important;
-	}
 }
 
 #wrapper {
@@ -70,6 +57,7 @@ html {
 	font-size: 16px;
 	color: transparent;
 	opacity: 1;
+	font-family: var(--System);
 }
 
 html.js {
@@ -100,7 +88,8 @@ body {
 	color: transparent;
 }
 
-.loaded body {
+.loaded body,
+.loaded {
 	transition: color 0.5s linear;
 	color: var(--text);
 }
@@ -160,6 +149,7 @@ main {
 	width: clamp(414px, 95vw, 992px);
 	margin: 0 auto;
 }
+
 #Logo,
 #navigation {
 	grid-row: 1 / 2;
@@ -168,6 +158,11 @@ main {
 
 #navigation {
 	place-self: end start;
+}
+
+ul {
+	padding-left: 0;
+	list-style: none;
 }
 
 nav {
@@ -267,6 +262,11 @@ a {
 	font-family: var(--System);
 }
 
+.no-js a,
+.loaded a {
+	color: var(--text);
+}
+
 .flow > * {
 	margin: 0;
 }
@@ -279,8 +279,22 @@ a {
 	display: inline-block;
 	margin-inline-start: 0.75ch;
 }
+.work-links a {
+	font-size: 1.5rem;
+}
+.work-links li:not([class])::before {
+	content: '\00BB';
+	font-size: 2rem;
+	display: inline-block;
+	margin-right: 0.5rem;
+}
 
-a[skiplink] {
+.work-links a {
+	text-decoration: none;
+	border-bottom: 3px dashed transparent;
+}
+
+.work-links a + span + span {
 	position: fixed !important;
 	/* keep it on viewport */
 	top: 0px !important;
@@ -302,14 +316,17 @@ a[skiplink] {
 	pointer-events: none !important;
 }
 
-a[skiplink]:focus {
-	position: absolute !important;
-	top: 0px !important;
-	left: 0px !important;
-	height: auto !important;
-	width: auto !important;
-	margin: auto !important;
-	opacity: 1 !important;
-	pointer-events: auto !important;
-	background-color: white;
+.work-links a:hover {
+	border-bottom-color: currentColor;
+}
+
+.work-links a + span::after {
+	content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' aria-hidden='true' focusable='false' width='1em' height='1em' preserveAspectRatio='xMidYMid meet' viewBox='0 0 36 36' data-icon='twemoji:link' data-width='1em' data-height='1em' data-inline='false' class='iconify' style='transform: rotate(360deg);'%3E%3Cpath fill='%238899A6' d='M15 9l6-6s6-6 12 0s0 12 0 12l-8 8s-6 6-12 0c-1.125-1.125-1.822-2.62-1.822-2.62l3.353-3.348S14.396 18.396 16 20c0 0 3 3 6 0l8-8s3-3 0-6s-6 0-6 0l-3.729 3.729s-1.854-1.521-5.646-.354L15 9z'%3E%3C/path%3E%3Cpath fill='%238899A6' d='M20.845 27l-6 6s-6 6-12 0s0-12 0-12l8-8s6-6 12 0c1.125 1.125 1.822 2.62 1.822 2.62l-3.354 3.349s.135-1.365-1.469-2.969c0 0-3-3-6 0l-8 8s-3 3 0 6s6 0 6 0l3.729-3.729s1.854 1.521 5.646.354l-.374.375z'%3E%3C/path%3E%3C/svg%3E");
+	display: inline-block;
+	margin-left: 0.5rem;
+	transition: transform 0.25s ease-out;
+}
+
+.work-links a:hover + span::after {
+	transform: translateY(-0.5rem);
 }
