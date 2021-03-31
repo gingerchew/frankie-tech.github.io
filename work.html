@@ -26,6 +26,41 @@
 		<noscript>
 			<link rel="stylesheet" href="/index.css" />
 		</noscript>
+		<style>
+			a[skiplink] {
+				position: fixed !important;
+				/* keep it on viewport */
+				top: 0px !important;
+				left: 0px !important;
+				/* give it non-zero size, VoiceOver on Safari requires at least 2 pixels
+	   before allowing buttons to be activated. */
+				width: 4px !important;
+				height: 4px !important;
+				/* visually hide it with overflow and opacity */
+				opacity: 0 !important;
+				overflow: hidden !important;
+				/* remove any margin or padding */
+				border: none !important;
+				margin: 0 !important;
+				padding: 0 !important;
+				/* ensure no other style sets display to none */
+				display: block !important;
+				visibility: visible !important;
+				pointer-events: none !important;
+			}
+
+			a[skiplink]:focus {
+				position: absolute !important;
+				top: 0px !important;
+				left: 0px !important;
+				height: auto !important;
+				width: auto !important;
+				margin: auto !important;
+				opacity: 1 !important;
+				pointer-events: auto !important;
+				background-color: white;
+			}
+		</style>
 	</head>
 	<body>
 		<!-- prettier-ignore -->
@@ -69,10 +104,36 @@
 			<section id="wrapper" class="flow" aria-live="polite">
 				<h1>frankie has worked on these projects.</h1>
 				<small>the lowercase `f` is intentional</small>
-				<p class="h2">
-					construction, doctors, small businesses, and roofing
-					contractors
-				</p>
+				<div>
+					<ul role="list" class="work-links">
+						<li class="h3">Codepens</li>
+						<li>
+							<a
+								href="https://codepen.io/frankie_tech/full/RwPZYJP"
+								rel="noopener noreferrer"
+								target="_blank"
+								title="Opens in a new window"
+							>
+								Resurr:ECTIONism
+							</a>
+							<span aria-hidden="true"></span>
+							<span>Opens in a new window</span>
+						</li>
+						<li>
+							<a
+								href="https://codepen.io/frankie_tech/full/GRroMzo"
+								rel="noopener noreferrer"
+								target="_blank"
+								title="Opens in a new window"
+							>
+								Generative Logo
+							</a>
+							<span aria-hidden="true"></span>
+							<span>Opens in a new window</span>
+						</li>
+					</ul>
+				</div>
+				<p class="h2"></p>
 			</section>
 		</main>
 		<script async defer src="/static/index.js"></script>
