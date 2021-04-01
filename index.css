@@ -28,6 +28,8 @@
 	--Font: 'Brygada', var(--Serif);
 	--gradient-start: #7736f8;
 	--gradient-end: #0c008f;
+	--black: #0f0f0f;
+	--white: #fdfcfa;
 }
 
 #Logo {
