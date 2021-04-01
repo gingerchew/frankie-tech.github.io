@@ -16,7 +16,9 @@
 	--size-600: 1.77rem;
 	--size-700: 2.36rem;
 	--size-800: 3.15rem;
+	--sizev-800: clamp(1.8rem, 8.5vw, 3.15rem);
 	--size-900: 4.2rem;
+	--sizev-900: clamp(2rem, 9vw, 4.2rem);
 	--text: #ebf5f0;
 	--Serif: Iowan Old Style, Apple Garamond, Baskerville, Times New Roman,
 		Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji,
@@ -30,10 +32,12 @@
 
 #Logo {
 	max-width: 5rem;
-	place-self: end;
+	place-self: center end;
 	height: auto;
 	will-change: transform;
 	overflow: visible;
+	grid-column: 2;
+	grid-row: 1;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -46,6 +50,7 @@
 #wrapper {
 	opacity: 1;
 	transition: opacity 0.25s linear;
+	grid-column: 2 / span 1;
 }
 
 .transitioning #wrapper {
@@ -143,21 +148,24 @@ body::before {
 main {
 	position: relative;
 	display: grid;
-	grid-template-rows: 20vh;
+	grid-template-columns: 1fr clamp(414px, 95vw, 992px) 1fr;
+	grid-template-rows: min(25vh, 105px);
 	grid-auto-rows: auto;
 	height: 100%;
-	width: clamp(414px, 95vw, 992px);
-	margin: 0 auto;
+	grid-column-gap: 1vw;
+	grid-row-gap: 5vh;
 }
 
-#Logo,
 #navigation {
-	grid-row: 1 / 2;
+	display: grid;
 	grid-column: 1 / -1;
-}
-
-#navigation {
-	place-self: end start;
+	grid: inherit;
+	grid-gap: inherit;
+	grid-row: 1 / 2;
+	justify-content: space-around;
+	align-items: center;
+	background-color: var(--text);
+	width: 100%;
 }
 
 ul {
@@ -166,7 +174,10 @@ ul {
 }
 
 nav {
+	grid-column: 2;
+	grid-row: 1;
 	display: flex;
+	justify-content: flex-start;
 	align-items: flex-end;
 	padding-top: 2rem;
 }
@@ -174,6 +185,7 @@ nav {
 nav > * {
 	padding-right: 1rem;
 	font-family: var(--System);
+	color: var(--gradient-end);
 }
 
 nav > *:last-child {
@@ -181,9 +193,12 @@ nav > *:last-child {
 }
 
 nav a {
-	color: inherit;
 	text-decoration-color: transparent;
 	transition: text-decoration-color 0.25s ease-out;
+}
+
+.loaded nav a {
+	color: var(--gradient-end);
 }
 
 nav a:hover {
@@ -225,7 +240,7 @@ h1,
 .fonts h1,
 .no-js .h1,
 .fonts .h1 {
-	font-size: var(--size-900);
+	font-size: var(--sizev-900);
 	font-family: var(--Font);
 	letter-spacing: -0.01em;
 	font-weight: 700;
@@ -234,7 +249,7 @@ h1,
 .h2,
 h2 {
 	font-family: var(--Font);
-	font-size: var(--size-800);
+	font-size: var(--sizev-800);
 	font-weight: 400;
 	letter-spacing: -2px;
 }
