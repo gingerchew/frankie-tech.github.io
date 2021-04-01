@@ -149,7 +149,7 @@ main {
 	position: relative;
 	display: grid;
 	grid-template-columns: 1fr clamp(414px, 95vw, 992px) 1fr;
-	grid-template-rows: min(25vh, 105px);
+	grid-template-rows: clamp(80px, 15vh, 105px);
 	grid-auto-rows: auto;
 	height: 100%;
 	grid-column-gap: 1vw;
