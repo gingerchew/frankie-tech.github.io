@@ -158,7 +158,8 @@ nav {
 nav > * {
 	padding-right: 1rem;
 	font-family: var(--System);
-	color: var(--gradient-end);
+	color: transparent;
+	transition: color 0.25s ease-out;
 }
 
 nav > *:last-child {
@@ -166,12 +167,13 @@ nav > *:last-child {
 }
 
 nav a {
+	color: transparent;
 	text-decoration-color: transparent;
-	transition: text-decoration-color 0.25s ease-out;
+	transition: text-decoration-color 0.25s ease-out, color 0.25s ease-out;
 }
-
+.loaded nav > *,
 .loaded nav a {
-	color: var(--gradient-end);
+	color: var(--text-color);
 }
 
 nav a:hover {
