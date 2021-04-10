@@ -3,12 +3,13 @@
 	id="Root"
 	lang="en"
 	class="no-js"
-	style="background-color: #421bc4; color: transparent"
+	style="background-color: hsl(249.7, 100%, 93.9%); color: transparent"
 >
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Whoops! This was intentional</title>
+		<meta name="color-scheme" content="dark light" />
 		<script>
 			Root.classList.remove('no-js');
 			Root.classList.add('js');
@@ -17,6 +18,60 @@
 		<script>(_=>_?Promise.all([document.fonts.load("1em Brygada")]).then(_=>Root.classList.add('fonts')):Root.classList.add('fonts'))("fonts"in document)</script>
 		<!-- prettier-ignore -->
 		<style>*,*::before,*::after{box-sizing:border-box}a{color:transparent}[class],ol[class]{padding:0}body,h1,h2,h3,h4,p,ul[class],ol[class],figure,blockquote,dl,dd{margin:0}html{scroll-behavior:smooth}body{min-height:100vh;text-rendering:optimizeSpeed;line-height:1.5}ul[class],ol[class]{list-style:none}a:not([class]){text-decoration-skip-ink:auto}img,picture{max-width:100%;display:block}article>*+*{margin-top:1em}input,button,textarea,select{font:inherit}img:not([alt]){filter:blur(10px)}@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}}</style>
+		<style>
+			@font-face {
+				font-family: 'Brygada';
+				font-weight: 400 700;
+				font-display: swap;
+				src: url('static/Brygada1918-VariableFont_wght.woff2')
+						format('woff2 supports variations'),
+					url('static/Brygada1918-VariableFont_wght.woff2')
+						format('woff2-variations'),
+					url('static/Brygada1918-VariableFont_wght.ttf')
+						format('ttf');
+			}
+			:root {
+				--size-300: 0.75rem;
+				--size-400: 1rem;
+				--size-500: 1.33rem;
+				--size-600: 1.77rem;
+				--size-700: 2.36rem;
+				--size-800: 3.15rem;
+				--sizev-800: clamp(1.8rem, 8.5vw, 3.15rem);
+				--size-900: 4.2rem;
+				--sizev-900: clamp(2rem, 9vw, 4.2rem);
+				--Serif: Iowan Old Style, Apple Garamond, Baskerville,
+					Times New Roman, Droid Serif, Times, Source Serif Pro, serif,
+					Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+				--System: -apple-system, BlinkMacSystemFont, avenir next, avenir,
+					segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto,
+					arial, sans-serif;
+				--Font: 'Brygada', var(--Serif);
+				--blacker: #0f0f0f;
+				--black: rgb(21, 32, 43);
+				--text-white: #ebf5f0;
+				--text-black: var(--black);
+				--text-color: var(--text-black);
+				--white: #fdfcfa;
+				--gradient-start: hsl(323.2, 100%, 91.4%);
+				--gradient-end: hsl(249.7, 100%, 93.9%);
+				--focus-black: hsla(208.5, 18%, 43.5%, 0.1);
+				--focus-white: hsla(208.5, 18%, 43.5%, 0.1);
+				--focus: var(--focus-black);
+			}
+
+			@media (prefers-color-scheme: dark) {
+				:root {
+					--text-color: var(--text-white);
+					--gradient-start: hsl(285, 100%, 34%);
+					--gradient-end: hsl(242, 75%, 24%);
+					--focus: var(--focus-white);
+				}
+			}
+			.hidden {
+				display: none !important;
+			}
+		</style>
 		<link
 			rel="stylesheet"
 			href="/index.css"
@@ -106,7 +161,7 @@
 				<small>the lowercase `f` is intentional</small>
 				<div>
 					<ul role="list" class="work-links">
-						<li class="h3">Codepens</li>
+						<li class="h2">CODEPENS</li>
 						<li>
 							<a
 								href="https://codepen.io/frankie_tech/full/RwPZYJP"

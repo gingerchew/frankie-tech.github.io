@@ -47,18 +47,43 @@
 					segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto,
 					arial, sans-serif;
 				--Font: 'Brygada', var(--Serif);
-				--black: #0f0f0f;
+				--blacker: #0f0f0f;
+				--black: rgb(21, 32, 43);
 				--text-white: #ebf5f0;
 				--text-black: var(--black);
 				--text-color: var(--text-black);
 				--white: #fdfcfa;
 				--gradient-start: hsl(323.2, 100%, 91.4%);
 				--gradient-end: hsl(249.7, 100%, 93.9%);
+				--gradient-light: linear-gradient(
+					var(--gradient-angle),
+					#ffd3ee,
+					#ffd3ef,
+					#ffd4f3,
+					#ffd5f8,
+					#ffd7fe,
+					#fad9ff,
+					#f4daff,
+					#efdcff,
+					#eadeff,
+					#e7dfff,
+					#e6e0ff,
+					#e5e0ff
+				);
+				--gradient-dark:linear-gradient(var(--gradient-angle), #8200ad, #7e00ab, #7302a7, #6504a0, #540698, #44088f, #350a86, #280c7e, #1e0d76, #180e70, #130f6c, #120f6b);
+				--gradient: var(--gradient-light)
+				--focus-black: hsla(208.5, 18%, 43.5%, 0.1);
+				--focus-white: hsla(208.5, 18%, 43.5%, 0.1);
+				--focus: var(--focus-black);
 			}
 
 			@media (prefers-color-scheme: dark) {
 				:root {
 					--text-color: var(--text-white);
+					--gradient-start: hsl(285, 100%, 34%);
+					--gradient-end: hsl(242, 75%, 24%);
+					--gradient: var(--gradient-dark);
+					--focus: var(--focus-white);
 				}
 			}
 			.hidden {
