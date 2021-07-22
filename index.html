@@ -53,24 +53,10 @@
 				--text-black: var(--black);
 				--text-color: var(--text-black);
 				--white: #fdfcfa;
-				--gradient-start: hsl(323.2, 100%, 91.4%);
-				--gradient-end: hsl(249.7, 100%, 93.9%);
-				--gradient-light: linear-gradient(
-					var(--gradient-angle),
-					#ffd3ee,
-					#ffd3ef,
-					#ffd4f3,
-					#ffd5f8,
-					#ffd7fe,
-					#fad9ff,
-					#f4daff,
-					#efdcff,
-					#eadeff,
-					#e7dfff,
-					#e6e0ff,
-					#e5e0ff
-				);
-				--gradient-dark:linear-gradient(var(--gradient-angle), #8200ad, #7e00ab, #7302a7, #6504a0, #540698, #44088f, #350a86, #280c7e, #1e0d76, #180e70, #130f6c, #120f6b);
+				--gradient-start: #accbee;
+				--gradient-end: #ffd3ee;
+				--gradient-light: linear-gradient(var(--gradient-angle), #accbee, #adc9ef, #afc3f0, #b2baf3, #bbb6f5, #cfbbf8, #e2c0fa, #f3c5fc, #fdcafb, #fecff4, #ffd2ef, #ffd3ee);
+				--gradient-dark: linear-gradient(var(--gradient-angle), #5071a1, #4f6fa0, #4b6a9c, #456396, #3f598e, #384f85, #31457b, #2b3c71, #263468, #222d61, #1f295c, #1e285a);
 				--gradient: var(--gradient-light)
 				--focus-black: hsla(208.5, 18%, 43.5%, 0.1);
 				--focus-white: hsla(208.5, 18%, 43.5%, 0.1);
@@ -80,8 +66,8 @@
 			@media (prefers-color-scheme: dark) {
 				:root {
 					--text-color: var(--text-white);
-					--gradient-start: hsl(285, 100%, 34%);
-					--gradient-end: hsl(242, 75%, 24%);
+					--gradient-start: #5071a1;
+					--gradient-end: #1e285a;
 					--gradient: var(--gradient-dark);
 					--focus: var(--focus-white);
 				}
@@ -137,7 +123,7 @@
 	</head>
 	<body>
 		<!-- prettier-ignore -->
-		<script>requestAnimationFrame(() => document.body.style.setProperty('--gradient-angle', Math.floor(Math.random() * 361) + 'deg'));</script>
+		<script type="module">requestAnimationFrame(() => document.body.style.setProperty('--gradient-angle', Math.floor(Math.random() * 361) + 'deg'));</script>
 		<a href="#main" skiplink>Skip to main</a>
 		<!-- inpiration: https://bestfolios.medium.com/5-minimalist-design-portfolios-for-inspiration-57dc6bb439c1 -->
 		<main id="main">
