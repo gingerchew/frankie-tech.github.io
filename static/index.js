@@ -30,20 +30,21 @@ addEventListener('click', e => {
 	while (a.localName !== 'a' && (a = a.parentNode));
 	if (a && a.origin == location.origin && !a.target && a.getAttribute('href')[0] !== '#') {
 		e.preventDefault();
-		history.pushState(0, 0, a.href);
+		document.querySelector('[aria-current="page"]').removeAttribute('aria-current', 'page');
+		history.pushState(0, 0, a.href, a);
 	}
 });
 
 const setCoords = async (coords = {}) => {
 	const hasData = 'data' in coords;
 	return new Promise(res => {
-		requestAnimationFrame(() =>
+		requestAnimationFrame(() => {
 			circles.forEach((el, i) => {
 				let [x, y] = hasData ? coords.data[i] : ['0', '0'];
 				el.style.setProperty('--x', x);
 				el.style.setProperty('--y', y);
 			})
-		);
+		});
 		res();
 	});
 };
@@ -54,6 +55,7 @@ worker.onmessage = (eventDetails) => setCoords(eventDetails);
 
 var c = 0;
 let lastUrl = '';
+
 function go(url) {
 	if (url === lastUrl) {
 		worker.postMessage(true);
@@ -67,12 +69,14 @@ function go(url) {
 
 	// you can plug your own implementation in here!
 	var id = ++c;
+
 	// TODO when going home, reset, otherwise, make logo more chaotic
 	fetch(url).then(r => r.text()).then(html => {
 		var doc = new DOMParser().parseFromString(html, 'text/html');
 		if (c !== id) return;
 		document.title = doc.title;
 		wrapper.innerHTML = doc.getElementById('wrapper').innerHTML;
+
 	})
 		.then(() => worker.postMessage(true))
 		.then(() => Root.classList.remove('transitioning'));
@@ -80,9 +84,10 @@ function go(url) {
 
 var ps = history.pushState;
 
-history.pushState = (a, b, url) => {
+history.pushState = (a, b, url, anchor) => {
 	ps.call(history, a, b, url);
 	go(url);
+	anchor.setAttribute('aria-current', 'page');
 };
 
 addEventListener('popstate', () => go(location.href));
